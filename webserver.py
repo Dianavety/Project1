@@ -2,11 +2,15 @@ from socket import *
 import sys # In order to terminate the program
 
 serverSocket = socket(AF_INET, SOCK_STREAM)
-
+#19
 # -------------
 # Fill in start
 # -------------
-
+PORT = 8020
+SERVER =gethostbyname(gethostname()) 
+print(SERVER)
+serverSocket.bind((SERVER,PORT))
+serverSocket.listen(1)
   # TODO: Assign a port number
   #       Bind the socket to server address and server port
   #       Tell the socket to listen to at most 1 connection at a time
@@ -23,7 +27,11 @@ while True:
     # -------------
     # Fill in start
     # -------------
-    connectionSocket, addr = None # TODO: Set up a new connection from the client
+
+    connectionSocket, addr = serverSocket.accept()
+    
+    None # TODO: Set up a new connection from the client
+
     # -----------
     # Fill in end
     # -----------
@@ -33,7 +41,9 @@ while True:
         # -------------
         # Fill in start
         # -------------
-        message = None # TODO: Receive the request message from the client
+        message = connectionSocket.recv(1024)
+        
+        None # TODO: Receive the request message from the client
         # -----------
         # Fill in end
         # -----------
@@ -46,17 +56,22 @@ while True:
 		# a character '\', we read the path from the second character
         f = open(filename[1:])
         
-        # -------------
+        # -------------x
         # Fill in start
         # -------------
-        outputdata = None # TODO: Store the entire contents of the requested file in a temporary buffer
+        outputdata = f.read()
+        print(outputdata)
+
+        
+        None # TODO: Store the entire contents of the requested file in a temporary buffer
         # -----------
         # Fill in end
         # -----------
-
+        
         # -------------
         # Fill in start
         # -------------
+        connectionSocket.send('\nHTTP/1.1 200 OK\n\n'.encode())
             # TODO: Send one HTTP header line into socket
         # -----------
         # Fill in end
@@ -69,12 +84,15 @@ while True:
 
         connectionSocket.close()
 
-    except IOError:
+    except IOError as err:
+        print(err)
         # -------------
         # Fill in start
         # -------------
+        connectionSocket.send('\nHTTP/1.1 404 Not Found\n\n'.encode())
             # TODO: Send response message for file not found
             #       Close client socket
+        connectionSocket.close()
         # -----------
         # Fill in end
         # -----------
