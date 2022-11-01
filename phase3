@@ -13,16 +13,10 @@ client.connect((SERVER,PORT))
 #request vs return header
 
 client.send('GET /Helloworld.http HTTP/1.1'.encode())
-message = client.recv(1024) 
-print (message)
 
 #display server response
-
-# #client takes in 
-# def client(SERVER, PORT):
-#     srequests = requests.get(SERVER, PORT)
-
-
+message = client.recv(1024) 
+print (message)
 
 #pickle to send things that aren't strings
 #create new socket, connect socket to server socket.connect and connect to server and port 
