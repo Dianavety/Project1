@@ -1,7 +1,7 @@
 from socket import *
 import sys # In order to terminate the program
 import threading
-#import time
+import time
 
 #Assigns a port number
 #Binds the socket to server address and server port
@@ -21,6 +21,7 @@ def handle_client(connectionSocket, addr):
 #Receives the request message from the client
     message = connectionSocket.recv(1024) 
         # print(f"[{addr}] {message}")
+    print(message)
 
     try:
 
@@ -35,7 +36,7 @@ def handle_client(connectionSocket, addr):
 
         outputdata = f.read()
         #print(outputdata)
-        #time.sleep(7)
+        time.sleep(7)
         
         None # TODO: Store the entire contents of the requested file in a temporary buffer
 
